@@ -200,7 +200,7 @@ export default function Home({ data }) {
             <div className="timeline-start">2030</div>
             <div className="conference-center-line"></div>
             <div className="conference-timeline-content">
-            {data.allMarkdownRemark.group.reverse().map(( entriesOfDate, idx ) =>
+            {data.allMarkdownRemark.group.slice(0).reverse().map(( entriesOfDate, idx ) =>
               {
                 console.log(idx)
                 return (
