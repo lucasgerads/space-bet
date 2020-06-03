@@ -17,7 +17,6 @@ export default ({ data }) => (
       <p>This was all before Elon Musk outed himself as a crazy person, and before the phallic imagery occured to them.</p>
 
       <p>Still--a bet's a bet.</p>
-
   </Layout>
 )
 

@@ -15,7 +15,7 @@ export default function Home({ data }) {
           /*===== Vertical Timeline =====*/
           #conference-timeline {
             position: relative;
-            max-width: 920px;
+            max-width: 1280px;
             width: 100%;
             margin: 0 auto;
           }
