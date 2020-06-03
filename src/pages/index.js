@@ -116,6 +116,7 @@ export default function Home({ data }) {
             content: "\f0d9";
             left: -8px;
           }
+          
           .timeline-article .meta-date {
             position: absolute;
             top: 0;
@@ -127,6 +128,7 @@ export default function Home({ data }) {
             border-radius: 100%;
             background: #00b0bd;
           }
+          
           .timeline-article .meta-date .date,
           .timeline-article .meta-date .month {
             display: block;
@@ -198,7 +200,7 @@ export default function Home({ data }) {
             <div className="timeline-start">2030</div>
             <div className="conference-center-line"></div>
             <div className="conference-timeline-content">
-            {data.allMarkdownRemark.group.map(( entriesOfDate, idx ) =>
+            {data.allMarkdownRemark.group.reverse().map(( entriesOfDate, idx ) =>
               {
                 console.log(idx)
                 return (
@@ -259,7 +261,8 @@ export default function Home({ data }) {
 
 export const query = graphql`
 query {
-  allMarkdownRemark {
+  allMarkdownRemark
+  {
     group(field: frontmatter___date) {
     totalCount
     edges {
@@ -267,7 +270,7 @@ query {
         rawMarkdownBody
         frontmatter {
           percentage
-          date
+          date(formatString: "MMMM DD, YYYY")
           title
         }
         parent {
