@@ -208,6 +208,9 @@ export default function Home({ data }) {
                 {
                 entriesOfDate.edges.slice(0,2).map(( { node }) => { 
                   console.log(node)
+                  let splitDate = node.frontmatter.date.split(" ");
+                  splitDate[1] = splitDate[1].slice(0, -1); 
+                  console.log(splitDate)
                   if (node.parent.relativeDirectory === 'Lucas'){
                     console.log("yay Lucas")
                     return(
@@ -219,8 +222,8 @@ export default function Home({ data }) {
                       <span className="timeline-author">{node.frontmatter.date}</span>
                       </div>
                       <div className="meta-date">
-                        <span className="date">18</span>
-                        <span className="month">APR</span>
+                        <span className="date">{splitDate[1]}</span>
+                        <span className="month">{splitDate[0]}</span>
                       </div>
                       </>
                     )
@@ -235,8 +238,8 @@ export default function Home({ data }) {
                       <span className="timeline-author">{node.frontmatter.date}</span>
                       </div>
                       <div className="meta-date">
-                        <span className="date">18</span>
-                        <span className="month">APR</span>
+                        <span className="date">{splitDate[1]}</span>
+                        <span className="month">{splitDate[0]}</span>
                       </div>
                       </>
                     )
@@ -270,7 +273,7 @@ query {
         rawMarkdownBody
         frontmatter {
           percentage
-          date(formatString: "MMMM DD, YYYY")
+          date(formatString: "MMM DD, YYYY")
           title
         }
         parent {
