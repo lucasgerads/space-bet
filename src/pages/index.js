@@ -6,7 +6,7 @@ import { graphql } from "gatsby"
 
 
 export default function Home({ data }) {
-  console.log(data)
+              
   return (
     <Layout>
       <div>
@@ -89,7 +89,7 @@ export default function Home({ data }) {
           .timeline-article p span.article-number {
             position: absolute;
             font-weight: 300;
-            font-size: 44px;
+            font-size: 25px;
             top: 10px;
             left: -60px;
             color: #00b0bd;
@@ -116,6 +116,7 @@ export default function Home({ data }) {
             content: "\f0d9";
             left: -8px;
           }
+          
           .timeline-article .meta-date {
             position: absolute;
             top: 0;
@@ -127,6 +128,7 @@ export default function Home({ data }) {
             border-radius: 100%;
             background: #00b0bd;
           }
+          
           .timeline-article .meta-date .date,
           .timeline-article .meta-date .month {
             display: block;
@@ -143,7 +145,7 @@ export default function Home({ data }) {
           }
           /*===== // Vertical Timeline =====*/
           
-          /*===== Resonsive Vertical Timeline =====*/
+          /*===== Responsive Vertical Timeline =====*/
           @media only screen and (max-width: 830px) {
             #conference-timeline .timeline-start,
             #conference-timeline .timeline-end {
@@ -191,49 +193,66 @@ export default function Home({ data }) {
             }
             
           }
-          /*===== // Resonsive Vertical Timeline =====*/
+          /*===== // Responsive Vertical Timeline =====*/
         `}
         >
           <section id="conference-timeline">
-            <div class="timeline-start">Start</div>
-            <div class="conference-center-line"></div>
-            <div class="conference-timeline-content">
-            {data.allMarkdownRemark.edges.map(({ node }) => { 
-                if (node.parent.relativeDirectory === 'Lucas'){
-                  console.log("yay Lucas")
-                  return(
-                    <div class="timeline-article" key={node.id}>
-                    <div class="content-left-container">
-                      <div class="content-left">
-                        <p>{node.rawMarkdownBody}<span class="article-number">01</span></p>
+            <div className="timeline-start">2030</div>
+            <div className="conference-center-line"></div>
+            <div className="conference-timeline-content">
+            {data.allMarkdownRemark.group.reverse().map(( entriesOfDate, idx ) =>
+              {
+                console.log(idx)
+                return (
+                <div className="timeline-article"  key={idx}>
+                {
+                entriesOfDate.edges.slice(0,2).map(( { node }) => { 
+                  console.log(node)
+                  let splitDate = node.frontmatter.date.split(" ");
+                  splitDate[1] = splitDate[1].slice(0, -1); 
+                  console.log(splitDate)
+                  if (node.parent.relativeDirectory === 'Lucas'){
+                    console.log("yay Lucas")
+                    return(
+                      <>
+                      <div className="content-left-container">
+                        <div className="content-left">
+                          <p>{node.rawMarkdownBody}<span className="article-number">{node.frontmatter.percentage}</span></p>
+                        </div>
+                      <span className="timeline-author">{node.frontmatter.date}</span>
                       </div>
-                    <span class="timeline-author">{node.frontmatter.date}</span>
-                    </div>
-                    <div class="meta-date">
-                      <span class="date">18</span>
-                      <span class="month">APR</span>
-                    </div>
-                    </div>
-                  )
-                } else {
-                  console.log("yay Leon")
-                  return(
-                    <div class="timeline-article" key={node.id}>
-                    <div class="content-right-container">
-                      <div class="content-right">
-                        <p>{node.rawMarkdownBody}<span class="article-number">01</span></p>
+                      <div className="meta-date">
+                        <span className="date">{splitDate[1]}</span>
+                        <span className="month">{splitDate[0]}</span>
                       </div>
-                    <span class="timeline-author">{node.frontmatter.date}</span>
-                    </div>
-                    <div class="meta-date">
-                      <span class="date">18</span>
-                      <span class="month">APR</span>
-                    </div>
-                    </div>
-                  )
+                      </>
+                    )
+                  } else {
+                    console.log("yay Leon")
+                    return(
+                      <>
+                      <div className="content-right-container">
+                        <div className="content-right">
+                          <p>{node.rawMarkdownBody}<span className="article-number">{node.frontmatter.percentage}</span></p>
+                        </div>
+                      <span className="timeline-author">{node.frontmatter.date}</span>
+                      </div>
+                      <div className="meta-date">
+                        <span className="date">{splitDate[1]}</span>
+                        <span className="month">{splitDate[0]}</span>
+                      </div>
+                      </>
+                    )
+                  }
+                } 
+                )
                 }
-        })}
-    <div class="timeline-end">End</div>
+                </div>
+                )
+              })
+            }
+           
+    <div className="timeline-end">2020</div>
     </div>
     </section>
     </div>
@@ -245,13 +264,16 @@ export default function Home({ data }) {
 
 export const query = graphql`
 query {
-  allMarkdownRemark {
+  allMarkdownRemark
+  {
+    group(field: frontmatter___date) {
     totalCount
     edges {
       node {
         rawMarkdownBody
         frontmatter {
-          date
+          percentage
+          date(formatString: "MMM DD, YYYY")
           title
         }
         parent {
@@ -262,6 +284,7 @@ query {
           }
         }
       }
+    }
     }
   }
 } 
