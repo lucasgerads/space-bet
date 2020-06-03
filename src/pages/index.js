@@ -193,7 +193,7 @@ export default function Home({ data }) {
             }
             
           }
-          /*===== // Resonsive Vertical Timeline =====*/
+          /*===== // Responsive Vertical Timeline =====*/
         `}
         >
           <section id="conference-timeline">
