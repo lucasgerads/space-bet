@@ -202,7 +202,6 @@ export default function Home({ data }) {
             <div className="conference-timeline-content">
             {data.allMarkdownRemark.group.slice(0).reverse().map(( entriesOfDate, idx ) =>
               {
-                console.log(idx)
                 return (
                 <div className="timeline-article"  key={idx}>
                 {
@@ -212,7 +211,6 @@ export default function Home({ data }) {
                   splitDate[1] = splitDate[1].slice(0, -1); 
                   console.log(splitDate)
                   if (node.parent.relativeDirectory === 'Lucas'){
-                    console.log("yay Lucas")
                     return(
                       <>
                       <div className="content-left-container">
@@ -228,7 +226,6 @@ export default function Home({ data }) {
                       </>
                     )
                   } else {
-                    console.log("yay Leon")
                     return(
                       <>
                       <div className="content-right-container">
